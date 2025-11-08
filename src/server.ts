@@ -49,5 +49,3 @@ process.on('SIGTERM', () => gracefulShutdown('SIGTERM'));
 process.on('SIGINT', () => gracefulShutdown('SIGINT'));
 
 startServer();
-
-//JFXF1YJL1ZJ15S15AKHL6BP2

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Actualización de tu Solicitud</title>
+    <style>
+        body { background-color: #111827; }
+    </style>
+</head>
+<body class="bg-gray-900 font-sans p-4 sm:p-6 md:p-8">
+    <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+        <div class="p-8 md:p-10 text-gray-800">
+            <h1 class="text-3xl font-bold text-gray-900 mb-3">Actualización sobre tu solicitud</h1>
+            <p class="text-lg mb-6 text-gray-600">
+                Hola, {{userName}},
+            </p>
+            <p class="mb-6 leading-relaxed">
+                Tras revisar tu solicitud para registrar la cocina <strong class="font-semibold">{{kitchenName}}</strong>, hemos determinado que en este momento no podemos aprobarla.
+            </p>
+            
+            <div class="bg-red-50 border-l-4 border-red-500 p-6 rounded-lg mb-8">
+                <h3 class="text-lg font-bold text-red-900 mb-2">Motivo del rechazo:</h3>
+                <p class="text-red-800 leading-relaxed">{{rejectionReason}}</p>
+            </div>
+
+            <p class="mb-6 leading-relaxed">
+                Lamentamos cualquier inconveniente. Si crees que esto es un error o deseas proporcionar más información, no dudes en contactar a nuestro equipo de soporte.
+            </p>
+
+        </div>
+        <div class="bg-gray-100 p-4 text-center text-xs text-gray-600">
+            &copy; 2025 Bienestar Integral. Juntos, alimentamos el futuro.
+        </div>
+    </div>
+</body>
+</html>

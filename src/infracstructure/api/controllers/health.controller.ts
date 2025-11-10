@@ -1,8 +1,7 @@
-import { Response } from 'express';
+import { Request, Response } from 'express';
 
 export class HealthController {
-
-  public handle = ( res: Response): void => {
+  public handle = (_req: Request, res: Response): void => {
     try {
       res.status(200).json({
         success: true,

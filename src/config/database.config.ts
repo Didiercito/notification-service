@@ -12,4 +12,7 @@ export const databaseConfig = {
   synchronize: process.env.DB_SYNCHRONIZE === 'true',
   logging: process.env.DB_LOGGING === 'true',
   timezone: 'Z',
+  ssl: {
+    rejectUnauthorized: false
+  }
 };

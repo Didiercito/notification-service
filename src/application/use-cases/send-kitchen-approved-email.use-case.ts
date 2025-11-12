@@ -1,41 +1,40 @@
+import { KitchenApprovedEventDto } from '../dto/kitchen-approved-event.dto';
 import { IEmailService } from '../../domain/interfaces/IEmailService';
 import { IEmailLogRepository } from '../../domain/interfaces/IEmailLogRepository';
-import { KitchenRejectedEventDto } from '../dto/kitchen-rejected-event.dto';
 import { EmailLog, LogStatus } from '../../domain/entitie/email-log.entity';
 import { loadTemplate } from '../utils/template.helper';
 
-export class SendKitchenRejectedEmailUseCase {
+export class SendKitchenApprovedEmailUseCase {
   constructor(
     private readonly emailService: IEmailService,
     private readonly emailLogRepository: IEmailLogRepository
   ) {}
 
-  async execute(eventData: KitchenRejectedEventDto): Promise<void> {
-    const subject = '❌ Tu solicitud de cocina ha sido rechazada';
+  async execute(dto: KitchenApprovedEventDto): Promise<void> {
+    const subject = '🎉 ¡Tu cocina ha sido aprobada!';
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 
     try {
-      const htmlBody = await loadTemplate('kitchen_rejected.html', {
-        kitchenName: eventData.kitchenName,
-        reason: eventData.reason,
+      const htmlBody = await loadTemplate('kitchen_approved.html', {
+        kitchenName: dto.kitchenName,
       });
 
       await this.emailService.sendEmail({
-        recipient: eventData.email,
+        recipient: dto.email,
         subject,
         htmlBody,
       });
 
-      console.log(`✅ Email de rechazo de cocina enviado a: ${eventData.email}`);
+      console.log(`✅ Email de aprobación de cocina enviado a: ${dto.email}`);
     } catch (error: any) {
-      console.error('❌ Error enviando email de rechazo de cocina:', error);
+      console.error('❌ Error enviando email de aprobación de cocina:', error);
       logStatus = LogStatus.FAILED;
       errorMsg = error.message || 'Unknown error';
     } finally {
       const emailLog = new EmailLog(
         0,
-        eventData.email,
+        dto.email,
         subject,
         logStatus,
         new Date(),

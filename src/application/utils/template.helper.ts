@@ -12,11 +12,8 @@ export const loadTemplate = async (
       templateName
     );
 
-    // Lee el archivo
     let html = await fs.readFile(templatePath, 'utf-8');
 
-    // Reemplaza cada variable
-    // Busca patrones como {{userName}} o {{verificationUrl}}
     for (const [key, value] of Object.entries(variables)) {
       const regex = new RegExp(`{{\\s*${key}\\s*}}`, 'g');
       html = html.replace(regex, value);

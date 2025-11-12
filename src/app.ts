@@ -4,17 +4,17 @@ import { healthController } from './infracstructure/api/dependencies/dependencie
 
 const app: Application = express();
 
-app.use(cors());
+app.use(cors({origin: '*'}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.get('/health', healthController.handle);
 
-app.use((req: Request, res: Response) => {
+app.use((_req: Request, res: Response) => {
   res.status(404).json({
     success: false,
     message: 'Route not found on Notification Service',
-    path: req.originalUrl,
+    path: _req.originalUrl,
   });
 });
 

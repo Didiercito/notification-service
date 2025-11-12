@@ -1,29 +1,19 @@
-import { IsNotEmpty, IsObject, ValidateNested } from 'class-validator';
-import { Type } from 'class-transformer';
-
-class UserData {
-  @IsNotEmpty()
-  email: string;
-
-  @IsNotEmpty()
-  names: string;
-}
-
-class KitchenData {
-  @IsNotEmpty()
-  name: string;
-}
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 
 export class KitchenPendingEventDto {
-  @IsObject()
   @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => UserData)
-  userData: UserData;
+  @IsString()
+  userId!: string;
 
-  @IsObject()
   @IsNotEmpty()
-  @ValidateNested()
-  @Type(() => KitchenData)
-  kitchenData: KitchenData;
+  @IsString()
+  kitchenName!: string;
+
+  @IsNotEmpty()
+  @IsEmail()
+  email!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  timestamp!: string;
 }

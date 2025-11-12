@@ -13,6 +13,7 @@ export class AuthServiceUserRepository implements IUserRepository {
         email: response.data.data.email,
         names: response.data.data.names,
         firstLastName: response.data.data.firstLastName,
+        secondLastName: response.data.data.secondLastName, // 👈 agregado
       };
 
       return userData;

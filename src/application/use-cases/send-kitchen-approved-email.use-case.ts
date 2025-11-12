@@ -1,40 +1,53 @@
-import { KitchenApprovedEventDto } from '../dto/kitchen-approved-event.dto';
 import { IEmailService } from '../../domain/interfaces/IEmailService';
 import { IEmailLogRepository } from '../../domain/interfaces/IEmailLogRepository';
+import { IUserRepository } from '../../domain/interfaces/IUserRepository';
+import { KitchenApprovedEventDto } from '../dto/kitchen-approved-event.dto';
 import { EmailLog, LogStatus } from '../../domain/entitie/email-log.entity';
 import { loadTemplate } from '../utils/template.helper';
 
 export class SendKitchenApprovedEmailUseCase {
   constructor(
     private readonly emailService: IEmailService,
-    private readonly emailLogRepository: IEmailLogRepository
+    private readonly emailLogRepository: IEmailLogRepository,
+    private readonly userRepository: IUserRepository
   ) {}
 
-  async execute(dto: KitchenApprovedEventDto): Promise<void> {
-    const subject = '🎉 ¡Tu cocina ha sido aprobada!';
+  async execute(event: KitchenApprovedEventDto): Promise<void> {
+    const subject = '¡Tu cocina ha sido aprobada!';
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 
     try {
-      const htmlBody = await loadTemplate('kitchen_approved.html', {
-        kitchenName: dto.kitchenName,
-      });
+      console.log(`[📬] Procesando evento de aprobación de cocina ID=${event.kitchenId}`);
+
+      const owner = await this.userRepository.getUserById(event.ownerId);
+
+      if (!owner) {
+        throw new Error(`No se encontró el usuario con ID=${event.ownerId}`);
+      }
+
+      const variables = {
+        userName: owner.names,
+        kitchenName: event.kitchenName,
+      };
+
+      const htmlBody = await loadTemplate('kitchen_approved.html', variables);
 
       await this.emailService.sendEmail({
-        recipient: dto.email,
+        recipient: owner.email,
         subject,
         htmlBody,
       });
 
-      console.log(`✅ Email de aprobación de cocina enviado a: ${dto.email}`);
+      console.log(`✅ Email de aprobación enviado a: ${owner.email}`);
     } catch (error: any) {
-      console.error('❌ Error enviando email de aprobación de cocina:', error);
+      console.error('❌ Error al enviar correo de aprobación de cocina:', error);
       logStatus = LogStatus.FAILED;
       errorMsg = error.message || 'Unknown error';
     } finally {
       const emailLog = new EmailLog(
         0,
-        dto.email,
+        event.ownerId.toString(), 
         subject,
         logStatus,
         new Date(),

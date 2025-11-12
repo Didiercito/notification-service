@@ -1,19 +1,23 @@
-import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 
 export class KitchenApprovedEventDto {
+  @IsNumber()
   @IsNotEmpty()
-  @IsString()
-  kitchenId!: string;
+  kitchenId!: number;
 
+  @IsNumber()
   @IsNotEmpty()
+  ownerId!: number;
+
   @IsString()
+  @IsNotEmpty()
   kitchenName!: string;
 
+  @IsNumber()
   @IsNotEmpty()
-  @IsEmail()
-  email!: string;
+  approvedBy!: number;
 
-  @IsNotEmpty()
   @IsString()
-  ownerId!: string;
+  @IsNotEmpty()
+  timestamp!: string;
 }

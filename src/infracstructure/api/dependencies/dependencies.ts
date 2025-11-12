@@ -59,13 +59,11 @@ const sendWelcomeKitchenAdminEmailUseCase = new SendWelcomeKitchenAdminEmailUseC
 const sendKitchenApprovedEmailUseCase = new SendKitchenApprovedEmailUseCase(
   emailService,
   emailLogRepository,
-  userRepository
 ); 
 
 const sendKitchenRejectedEmailUseCase = new SendKitchenRejectedEmailUseCase(
   emailService,
   emailLogRepository,
-  userRepository
 );
 
 // CONEXIÓN DEL CONSUMER

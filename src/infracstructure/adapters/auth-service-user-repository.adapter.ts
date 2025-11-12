@@ -1,4 +1,4 @@
-import axios, { AxiosInstance } from 'axios';
+import _axios, { AxiosInstance } from 'axios';
 import { IUserRepository, UserData } from '../../domain/interfaces/IUserRepository';
 
 export class AuthServiceUserRepository implements IUserRepository {

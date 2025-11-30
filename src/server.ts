@@ -14,9 +14,9 @@ const startServer = async () => {
     await initializeDatabase();
     console.log('✅ Database connected successfully');
 
-    // console.log('📨 Connecting to RabbitMQ and starting consumer...');
-    // await rabbitMqConsumer.startConsuming(); 
-    // console.log('✅ RabbitMQ consumer started successfully');
+    console.log('📨 Connecting to RabbitMQ and starting consumer...');
+    await rabbitMqConsumer.startConsuming(); 
+    console.log('✅ RabbitMQ consumer started successfully');
 
     app.listen(PORT, () => {
       console.log('🚀═══════════════════════════════════════════════🚀');

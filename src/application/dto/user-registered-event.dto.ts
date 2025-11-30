@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, IsNumber } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, IsNumber, IsOptional } from 'class-validator';
 
 export class UserRegisteredEventDto {
   @IsNumber()
@@ -13,7 +13,7 @@ export class UserRegisteredEventDto {
   @IsNotEmpty()
   names: string;
 
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  verificationToken: string;
+  timestamp?: string;
 }

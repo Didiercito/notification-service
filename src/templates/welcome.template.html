@@ -3,35 +3,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>¡Bienvenido/a a la comunidad Bienestar Integral!</title>
+    <title>¡Bienvenido/a a Bienestar Integral!</title>
 </head>
 <body style="background-color: #f3f4f6; font-family: sans-serif; padding: 32px;">
-    <div style="max-width: 672px; margin-left: auto; margin-right: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); overflow: hidden;">
+    <div style="max-width: 672px; margin: auto; background-color: #ffffff; border-radius: 8px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); overflow: hidden;">
+        
+        <!-- HEADER -->
         <div style="background-color: #facc15; padding: 32px; text-align: center;">
             <h1 style="font-size: 36px; font-weight: 800; color: #1f2937;">¡Tu ayuda transforma vidas!</h1>
             <p style="margin-top: 8px; font-size: 18px; color: #374151;">Bienvenido/a a Bienestar Integral</p>
         </div>
+
+        <!-- BODY -->
         <div style="padding: 32px; color: #1f2937;">
+            
             <p style="font-size: 20px; margin-bottom: 16px;">
-                Hola, <strong style="font-weight: 600;">[Nombre del Voluntario]</strong>,
+                Hola, <strong style="font-weight: 600;">{{userName}}</strong>,
             </p>
+
             <p style="margin-bottom: 24px; font-size: 16px; line-height: 1.625;">
-                Estamos increíblemente felices de que te unas a nuestra misión. Tu tiempo y tus habilidades son el motor que impulsa a las cocinas comunitarias. En nuestra plataforma, conectar tu voluntad de ayudar con quienes más lo necesitan es más fácil que nunca.
+                ¡Gracias por unirte a la comunidad de Bienestar Integral!  
+                Nos alegra contar con personas comprometidas como tú, que desean apoyar a las cocinas comunitarias y contribuir al bienestar de quienes más lo necesitan.
             </p>
+
+            <!-- 🔥 PÁRRAFO ACTUALIZADO (OPCIÓN 1) -->
+            <p style="margin-bottom: 24px; font-size: 16px; line-height: 1.625;">
+                Ya registraste tus habilidades y disponibilidad, así que estás listo para comenzar. 
+                Muy pronto podrás recibir sugerencias de actividades cercanas a ti, basadas en tu experiencia 
+                y el tiempo que has indicado.
+            </p>
+
+            <!-- 🔥 NUEVO PÁRRAFO (OPCIÓN A - EXPLORAR COCINAS) -->
+            <p style="margin-bottom: 24px; font-size: 16px; line-height: 1.625;">
+                Ahora puedes explorar las cocinas más cercanas a ti y unirte a las actividades donde tu ayuda sea más valiosa.
+            </p>
+
             <div style="background-color: #f9fafb; border-left: 4px solid #facc15; padding: 24px; border-radius: 8px; margin-bottom: 32px;">
-                <h2 style="font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 12px;">¿Listo/a para empezar?</h2>
-                <p style="margin-bottom: 16px;">Tu perfil ya está creado. El siguiente paso es llenarlo con tus habilidades y disponibilidad para que podamos sugerirte las tareas perfectas para ti.</p>
-                <a href="[URL_A_SU_PERFIL]" style="display: inline-block; background-color: #1f2937; color: #ffffff; font-weight: 700; padding-top: 12px; padding-bottom: 12px; padding-left: 24px; padding-right: 24px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1); text-decoration: none;">
-                    Completar mi perfil
+                <h2 style="font-size: 20px; font-weight: 700; color: #1f2937; margin-bottom: 12px;">
+                    Próximos pasos
+                </h2>
+
+                <p style="margin-bottom: 16px;">
+                    Cuando existan actividades adecuadas para tu perfil, podrás consultarlas directamente y unirte a ellas con un solo clic.
+                </p>
+
+                <a href="{{profileUrl}}" 
+                   style="display: inline-block; background-color: #1f2937; color: #ffffff; font-weight: 700; padding: 12px 24px; border-radius: 8px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); text-decoration: none;">
+                    Ver mi perfil
                 </a>
             </div>
+
             <p style="text-align: center; color: #4b5563;">
-                Una vez que tu perfil esté listo, podrás explorar las cocinas cercanas y unirte a las tareas que más te inspiren.
+                Gracias por formar parte del cambio. Tu contribución puede marcar una diferencia real en la vida de muchas personas.
             </p>
+
         </div>
+
+        <!-- FOOTER -->
         <div style="background-color: #1f2937; padding: 24px; text-align: center; font-size: 14px; color: #d1d5db;">
-            Gracias por ser parte del cambio. <br> El equipo de <strong style="color: #facc15;">Bienestar Integral</strong>.
+            Con agradecimiento, <br>
+            El equipo de <strong style="color: #facc15;">Bienestar Integral</strong>.
         </div>
+
     </div>
 </body>
 </html>

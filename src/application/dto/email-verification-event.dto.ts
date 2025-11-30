@@ -12,4 +12,12 @@ export class EmailVerificationEventDto {
   @IsString()
   @IsNotEmpty()
   verificationToken: string;
+
+  @IsString()
+  @IsNotEmpty()
+  userName: string;
+
+  @IsString()
+  @IsNotEmpty()
+  verificationUrl: string;
 }

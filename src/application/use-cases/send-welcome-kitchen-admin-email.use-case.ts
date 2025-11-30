@@ -14,7 +14,7 @@ export class SendWelcomeKitchenAdminEmailUseCase {
 
   async execute(eventData: KitchenAdminRegisteredEventDto): Promise<void> {
     const { userId, kitchenData } = eventData;
-    const subject = '¡Bienvenido a Chambealo - Registro de Cocina Comunitaria!';
+    const subject = '¡Bienvenido a Bienestar Integral - Registro de Cocina Comunitaria!';
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 

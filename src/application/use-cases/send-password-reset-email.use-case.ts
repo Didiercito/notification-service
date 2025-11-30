@@ -11,7 +11,7 @@ export class SendPasswordResetEmailUseCase {
   ) {}
 
   async execute(dto: PasswordResetEventDto): Promise<void> {
-    const subject = 'Restablece tu contraseña de Chambealo';
+    const subject = 'Restablece tu contraseña de tu cuenta de Bienestar Integral';
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 

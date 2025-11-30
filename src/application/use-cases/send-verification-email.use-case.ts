@@ -11,15 +11,15 @@ export class SendVerificationEmailUseCase {
   ) {}
 
   async execute(dto: EmailVerificationEventDto): Promise<void> {
-    const subject = 'Verifica tu cuenta de Chambealo';
+    const subject = 'Verifica tu cuenta de Bienestar Integral';
+
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 
     try {
-      const verificationUrl = `${process.env.FRONTEND_URL}/verify-email?token=${dto.verificationToken}`;
-
       const htmlBody = await loadTemplate('verification.template.html', {
-        verificationUrl: verificationUrl,
+        userName: dto.userName,
+        verificationUrl: dto.verificationUrl,
       });
 
       await this.emailService.sendEmail({
@@ -27,21 +27,24 @@ export class SendVerificationEmailUseCase {
         subject,
         htmlBody,
       });
+
     } catch (error: any) {
       console.error('Error al enviar email de verificación:', error);
       logStatus = LogStatus.FAILED;
       errorMsg = error.message;
+
     } finally {
-      const emailLog = new EmailLog(
-        0,
-        dto.email,
-        subject,
-        logStatus,
-        new Date(),
-        'SendGrid',
-        errorMsg
+      await this.emailLogRepository.save(
+        new EmailLog(
+          0,
+          dto.email,
+          subject,
+          logStatus,
+          new Date(),
+          'SendGrid',
+          errorMsg
+        )
       );
-      await this.emailLogRepository.save(emailLog);
     }
   }
 }

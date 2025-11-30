@@ -9,7 +9,7 @@ export class SendVerificationSMSUseCase {
   ) {}
 
   async execute(phoneNumber: string, verificationCode: string): Promise<void> {
-    const message = `Tu código de verificación de Chambealo es: ${verificationCode}`;
+    const message = `Tu código de verificación de es: ${verificationCode}`;
     let logStatus = LogStatus.SENT;
     let errorMsg: string | null = null;
 

@@ -5,17 +5,21 @@ export class KitchenApprovedEventDto {
   @IsNotEmpty()
   kitchenId!: number;
 
-  @IsNumber()
-  @IsNotEmpty()
-  ownerId!: number;
-
   @IsString()
   @IsNotEmpty()
   kitchenName!: string;
 
   @IsNumber()
   @IsNotEmpty()
-  approvedBy!: number;
+  ownerId!: number;
+
+  @IsString()
+  @IsNotEmpty()
+  fullName!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  email!: string;
 
   @IsString()
   @IsNotEmpty()

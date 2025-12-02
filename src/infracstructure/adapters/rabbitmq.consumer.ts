@@ -8,7 +8,6 @@ import { EmailVerificationEventDto } from '../../application/dto/email-verificat
 import { PasswordResetEventDto } from '../../application/dto/password-reset-event.dto';
 import { KitchenPendingEventDto } from '../../application/dto/kitchen-pending-event.dto';
 import { KitchenRejectedEventDto } from '../../application/dto/kitchen-rejected-event.dto';
-import { KitchenAdminRegisteredEventDto } from '../../application/dto/kitchen-admin-registered-event.dto';
 import { KitchenApprovedEventDto } from '../../application/dto/kitchen-approved-event.dto';
 
 import { SendWelcomeEmailUseCase } from '../../application/use-cases/send-welcome-email.use-case';
@@ -17,11 +16,10 @@ import { SendPasswordResetEmailUseCase } from '../../application/use-cases/send-
 import { SendVerificationSMSUseCase } from '../../application/use-cases/send-verification-sms.use-case';
 import { SendKitchenPendingEmailUseCase } from '../../application/use-cases/send-kitchen-pending-email.use-case';
 import { SendKitchenRejectedEmailUseCase } from '../../application/use-cases/send-kitchen-rejected-email.use-case';
-import { SendWelcomeKitchenAdminEmailUseCase } from '../../application/use-cases/send-welcome-kitchen-admin-email.use-case';
 import { SendKitchenApprovedEmailUseCase } from '../../application/use-cases/send-kitchen-approved-email.use-case';
 
 const EXCHANGE_NAME = process.env.RABBITMQ_EXCHANGE;
-const QUEUE_NAME = 'notification_queue';
+const QUEUE_NAME = process.env.RABBITMQ_QUEUE_NOTIFICATIONS || '';
 
 const ROUTING_KEYS = {
   USER_REGISTERED: 'user.registered',
@@ -29,10 +27,9 @@ const ROUTING_KEYS = {
   USER_PASSWORD_RESET_REQUESTED: 'user.password.reset.requested',
   USER_PHONE_VERIFICATION_RESENT: 'user.phone.verification.resent',
 
-  KITCHEN_ADMIN_REGISTERED: 'kitchen.admin.registered',
   KITCHEN_PENDING: 'kitchen.pending',
   KITCHEN_APPROVED: 'kitchen.approved',
-  KITCHEN_REJECTED: 'kitchen.rejected'
+  KITCHEN_REJECTED: 'kitchen.rejected',
 };
 
 export class RabbitMQConsumer {
@@ -45,9 +42,8 @@ export class RabbitMQConsumer {
     private readonly sendPasswordResetEmailUseCase: SendPasswordResetEmailUseCase,
     private readonly sendVerificationSMSUseCase: SendVerificationSMSUseCase,
     private readonly sendKitchenPendingEmailUseCase: SendKitchenPendingEmailUseCase,
-    private readonly sendWelcomeKitchenAdminEmailUseCase: SendWelcomeKitchenAdminEmailUseCase,
     private readonly sendKitchenRejectedEmailUseCase: SendKitchenRejectedEmailUseCase,
-    private readonly sendKitchenApprovedEmailUseCase: SendKitchenApprovedEmailUseCase
+    private readonly sendKitchenApprovedEmailUseCase: SendKitchenApprovedEmailUseCase,
   ) {}
 
   async connect(): Promise<void> {
@@ -159,14 +155,6 @@ export class RabbitMQConsumer {
           await this.validateDto(rejectedDto);
           await this.sendKitchenRejectedEmailUseCase.execute(rejectedDto);
           console.log('✅ [EVENT] Email de rechazo de cocina enviado.');
-          break;
-
-        case ROUTING_KEYS.KITCHEN_ADMIN_REGISTERED:
-          console.log('👨‍🍳 [EVENT] Procesando kitchen.admin.registered...');
-          const adminRegDto = plainToInstance(KitchenAdminRegisteredEventDto, content);
-          await this.validateDto(adminRegDto);
-          await this.sendWelcomeKitchenAdminEmailUseCase.execute(adminRegDto);
-          console.log('✅ [EVENT] Email de bienvenida para admin de cocina enviado.');
           break;
 
         default:

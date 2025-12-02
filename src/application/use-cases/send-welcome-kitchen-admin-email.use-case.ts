@@ -19,29 +19,23 @@ export class SendWelcomeKitchenAdminEmailUseCase {
     let errorMsg: string | null = null;
 
     try {
-      // 🔍 Obtener usuario desde el Auth Service
       const user = await this.userRepository.getUserById(userId);
 
-      // ⚠️ Validar si no existe
       if (!user) {
         console.warn(`⚠️ Usuario con ID ${userId} no encontrado. No se enviará correo.`);
         return;
       }
 
-      // 🧩 Construir nombre completo
       const fullName = `${user.names ?? ''} ${user.firstLastName ?? ''} ${user.secondLastName ?? ''}`.trim();
 
-      // 🌐 Variables para el template
       const variables = {
         userName: fullName,
         kitchenName: kitchenData.name,
         dashboardUrl: process.env.KITCHEN_ADMIN_FRONTEND_URL || 'https://tu-app.com/login',
       };
 
-      // 📄 Cargar plantilla HTML
       const htmlBody = await loadTemplate('welcome_admin_kitchen.html', variables);
 
-      // ✉️ Enviar correo
       await this.emailService.sendEmail({
         recipient: user.email,
         subject,
@@ -55,7 +49,6 @@ export class SendWelcomeKitchenAdminEmailUseCase {
       logStatus = LogStatus.FAILED;
       errorMsg = error.message || 'Unknown error';
     } finally {
-      // 🧾 Guardar log del envío
       const email = eventData.userData?.email || 'unknown';
       const emailLog = new EmailLog(
         0,

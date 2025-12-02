@@ -5,21 +5,25 @@ export class KitchenRejectedEventDto {
   @IsNotEmpty()
   kitchenId!: number;
 
+  @IsString()
+  @IsNotEmpty()
+  kitchenName!: string;
+
   @IsNumber()
   @IsNotEmpty()
   ownerId!: number;
 
   @IsString()
   @IsNotEmpty()
-  kitchenName!: string;
+  fullName!: string;
+
+  @IsString()
+  @IsNotEmpty()
+  email!: string;
 
   @IsString()
   @IsNotEmpty()
   rejectionReason!: string;
-
-  @IsNumber()
-  @IsNotEmpty()
-  rejectedBy!: number;
 
   @IsString()
   @IsNotEmpty()

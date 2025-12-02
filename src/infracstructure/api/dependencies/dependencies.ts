@@ -16,10 +16,12 @@ import { SendWelcomeEmailUseCase } from '../../../application/use-cases/send-wel
 import { SendVerificationEmailUseCase } from '../../../application/use-cases/send-verification-email.use-case';
 import { SendPasswordResetEmailUseCase } from '../../../application/use-cases/send-password-reset-email.use-case';
 import { SendVerificationSMSUseCase } from '../../../application/use-cases/send-verification-sms.use-case';
+
 import { SendKitchenPendingEmailUseCase } from '../../../application/use-cases/send-kitchen-pending-email.use-case';
-import { SendWelcomeKitchenAdminEmailUseCase } from '../../../application/use-cases/send-welcome-kitchen-admin-email.use-case';
 import { SendKitchenRejectedEmailUseCase } from '../../../application/use-cases/send-kitchen-rejected-email.use-case';
 import { SendKitchenApprovedEmailUseCase } from '../../../application/use-cases/send-kitchen-approved-email.use-case';
+import { SendWelcomeKitchenAdminEmailUseCase } from '../../../application/use-cases/send-welcome-kitchen-admin-email.use-case';
+
 
 const emailLogRepository: IEmailLogRepository = new EmailLogAdapter();
 const emailService: IEmailService = new SendGridEmailAdapter();
@@ -33,34 +35,48 @@ const AXIOS_CLIENT: AxiosInstance = axios.create({
 
 const userRepository: IUserRepository = new AuthServiceUserRepository(AXIOS_CLIENT); 
 
-const sendWelcomeEmailUseCase = new SendWelcomeEmailUseCase(emailService, emailLogRepository);
-const sendVerificationEmailUseCase = new SendVerificationEmailUseCase(emailService, emailLogRepository);
-const sendPasswordResetEmailUseCase = new SendPasswordResetEmailUseCase(emailService, emailLogRepository);
-const sendVerificationSMSUseCase = new SendVerificationSMSUseCase(smsService, emailLogRepository);
+const sendWelcomeEmailUseCase = new SendWelcomeEmailUseCase(
+  emailService,
+  emailLogRepository
+);
+
+const sendVerificationEmailUseCase = new SendVerificationEmailUseCase(
+  emailService,
+  emailLogRepository
+);
+
+const sendPasswordResetEmailUseCase = new SendPasswordResetEmailUseCase(
+  emailService,
+  emailLogRepository
+);
+
+const sendVerificationSMSUseCase = new SendVerificationSMSUseCase(
+  smsService,
+  emailLogRepository
+);
 
 const sendKitchenPendingEmailUseCase = new SendKitchenPendingEmailUseCase(
   emailService, 
-  emailLogRepository,
-  userRepository
+  emailLogRepository
 );
 
-const sendWelcomeKitchenAdminEmailUseCase = new SendWelcomeKitchenAdminEmailUseCase(
-  emailService, 
-  emailLogRepository,
-  userRepository
+const sendKitchenRejectedEmailUseCase = new SendKitchenRejectedEmailUseCase(
+  emailService,
+  emailLogRepository
 );
 
 const sendKitchenApprovedEmailUseCase = new SendKitchenApprovedEmailUseCase(
   emailService,
-  emailLogRepository,
-  userRepository
-); 
-
-const sendKitchenRejectedEmailUseCase = new SendKitchenRejectedEmailUseCase(
-  emailService,
-  emailLogRepository,
-  userRepository
+  emailLogRepository
 );
+
+const sendWelcomeKitchenAdminEmailUseCase =
+  new SendWelcomeKitchenAdminEmailUseCase(
+    emailService, 
+    emailLogRepository,
+    userRepository
+  );
+
 
 const rabbitMqConsumer = new RabbitMQConsumer(
   sendWelcomeEmailUseCase,
@@ -68,14 +84,12 @@ const rabbitMqConsumer = new RabbitMQConsumer(
   sendPasswordResetEmailUseCase,
   sendVerificationSMSUseCase,
   sendKitchenPendingEmailUseCase,
-  sendWelcomeKitchenAdminEmailUseCase,
   sendKitchenRejectedEmailUseCase,
   sendKitchenApprovedEmailUseCase
 );
 
 const healthController = new HealthController();
 
-// EXPORTS
 export {
   healthController,
   rabbitMqConsumer,
@@ -83,8 +97,9 @@ export {
   sendVerificationEmailUseCase,
   sendPasswordResetEmailUseCase,
   sendVerificationSMSUseCase,
+
   sendKitchenPendingEmailUseCase,
-  sendWelcomeKitchenAdminEmailUseCase,
   sendKitchenRejectedEmailUseCase,
-  sendKitchenApprovedEmailUseCase 
+  sendKitchenApprovedEmailUseCase,
+  sendWelcomeKitchenAdminEmailUseCase
 };

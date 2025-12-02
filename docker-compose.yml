@@ -1,0 +1,15 @@
+services:
+  notification-service:
+    container_name: notification-service
+    build: .
+    restart: always
+    ports:
+      - "${PORT}:4004"
+    env_file:
+      - .env
+    networks:
+      - shared-network
+
+networks:
+  shared-network:
+    driver: bridge
